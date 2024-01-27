@@ -1,0 +1,42 @@
+plugins {
+	id 'java'
+	id 'jvm-test-suite'
+	id 'io.freefair.lombok'
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+	consistentResolution {
+		useCompileClasspathVersions()
+	}
+	withSourcesJar()
+}
+
+testing {
+	suites {
+		all {
+			useJUnitJupiter()
+		}
+	}
+}
+
+dependencies {
+	implementation platform('com.fasterxml.jackson:jackson-bom:2.16.1')
+	implementation platform('org.slf4j:slf4j-bom:2.0.11')
+	testImplementation platform('org.assertj:assertj-bom:3.25.2')
+
+	implementation 'org.slf4j:slf4j-api'
+	implementation 'com.fasterxml.jackson.core:jackson-databind'
+	implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv'
+	runtimeOnly 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
+	testImplementation 'org.assertj:assertj-core'
+	testRuntimeOnly 'ch.qos.logback:logback-classic:1.4.5'
+}
+
+repositories {
+	mavenCentral()
+}
+
